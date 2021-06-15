@@ -27,14 +27,9 @@ protected:
 	float screenWidth;
 	float screenHeight;
 
-	int btnState = 0;
-
-
 	Vector2 mousePoint;
 
 public:
-	bool mainMenuOpen = true;
-
 	void mainMenu();
 	void update();
 	void draw();

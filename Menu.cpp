@@ -4,7 +4,6 @@
 
 void Menu::mainMenu()
 {
-	
 	screenWidth = 800.0f;
 	screenHeight = 450.0f;
 
@@ -41,17 +40,10 @@ void Menu::update()
 	{
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{	
-			Quit* quit = new Quit();
-			mainMenuOpen = false;
+			Quit* quit = new Quit();			
 			quit->draw();
 		}
 	}
-	else
-	{
-		btnState = 0;
-	}
-
-	
 }
 
 void Menu::draw()
@@ -63,7 +55,6 @@ void Menu::draw()
 }
 
 void Menu::DeInitialization()
-{
-	
+{	
 	CloseAudioDevice();     // Close audio device
 }

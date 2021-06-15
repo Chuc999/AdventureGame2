@@ -16,30 +16,17 @@ int main(void)
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
-    {
-        // Update
-        //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
-        while (menu->mainMenuOpen || mainMenuOpen)
-        {
-            menu->update();
-            // Draw
-            //----------------------------------------------------------------------------------
-            BeginDrawing();
-
-            ClearBackground(GRAY);
-
-            menu->draw();
-
-            EndDrawing();
-        }       
-        
-        //DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+    {      
+        menu->update();
+    
         BeginDrawing();
+
         ClearBackground(GRAY);
+
+        menu->draw();
+
         EndDrawing();
-        //----------------------------------------------------------------------------------
+        
     }
 
     // De-Initialization

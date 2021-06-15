@@ -31,7 +31,6 @@ void Quit::draw()
 				DrawText("HIT", (int)screenWidth / 2, 0, 40, BLACK);
 				DrawRectangleRec(quitRecs->textBox2, RED);
 				quitMenuOpen = false;
-				mainMenuOpen = true;
 			}
 		}
 		else
