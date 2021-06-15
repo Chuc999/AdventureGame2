@@ -1,20 +1,18 @@
 #include "Menu.h"
+#include "raylib.h"
 
 void Menu::mainMenu()
 {
-	screenWidth = 800;
-	screenHeight = 450;
+	screenWidth = 800.0f;
+	screenHeight = 450.0f;
 
-	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+	InitWindow((int)screenWidth, (int)screenHeight, "MAIN MENU - Test One");
 
 	InitAudioDevice();
-	fxButton = LoadSound("resources/buttonfx.wav");
-	button = LoadTexture("newgamebutton.png");
-	frameHeight = (float)button.height / NUM_FRAMES;
-	sourceRec = { 0,0,(float)button.width, frameHeight };
-	btnBounds = { GetScreenWidth() / 2.0f - button.width / 2.0f, GetScreenHeight() / 2.0f - button.height / NUM_FRAMES / 2.0f, (float)button.width, frameHeight };
+	recs->textBox = { screenWidth / 2 - 100, 150, 190, 35 };
+	recs->textBox2 = { screenWidth / 2 - 100, 200, 210, 35 };
+	recs->textBox3 = { screenWidth / 2 - 100, 250, 100, 35 };
 	mousePoint = { 0.0f,0.0f };
-
 }
 
 void Menu::update()
@@ -22,11 +20,27 @@ void Menu::update()
 	mousePoint = GetMousePosition();
 	btnAction = false;
 
-	if (CheckCollisionPointRec(mousePoint, btnBounds))
+	if (CheckCollisionPointRec(mousePoint, recs->textBox))
 	{
 		if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
 		{
-			btnAction = true;
+			DrawText("HIT", (int)screenWidth / 2, 0, 40, BLACK);
+			DrawRectangleRec(recs->textBox, RED);
+		}
+	}
+	if (CheckCollisionPointRec(mousePoint, recs->textBox2))
+	{
+		if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+		{
+			DrawText("HIT", (int)screenWidth / 2, 0, 40, BLACK);
+			DrawRectangleRec(recs->textBox2, RED);
+		}
+	}
+	if (CheckCollisionPointRec(mousePoint, recs->textBox3))
+	{
+		if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+		{
+			exit(0);
 		}
 	}
 	else
@@ -36,22 +50,22 @@ void Menu::update()
 
 	if (btnAction)
 	{
-		PlaySound(fxButton);
-	}
 
-	sourceRec.y = btnState * frameHeight;
+		DrawText("HIT", (int)screenWidth / 2, 0, 40, BLACK);
+		DrawRectangleRec(recs->textBox, RED);
+	}
 }
 
 void Menu::draw()
-{
+{	
+	menuOptions* menu = new menuOptions();
 	ClearBackground(GRAY);
-	DrawTextureRec(button, sourceRec, Vector2 { btnBounds.x, btnBounds.y }, WHITE);
+	DrawText(menu->one, (int)recs->textBox.x, (int)recs->textBox.y, 40, MAROON);
+	DrawText(menu->two, (int)recs->textBox2.x, (int)recs->textBox2.y, 40, MAROON);
+	DrawText(menu->three, (int)recs->textBox3.x, (int)recs->textBox3.y, 40, MAROON);
 }
 
 void Menu::DeInitialization()
 {
-	UnloadTexture(button);  // Unload button texture
-	UnloadSound(fxButton);  // Unload sound
-
 	CloseAudioDevice();     // Close audio device
 }

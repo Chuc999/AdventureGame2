@@ -5,7 +5,7 @@ int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-   
+    
     Menu* menu = new Menu();
     menu->mainMenu();
 

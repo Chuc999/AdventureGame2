@@ -1,6 +1,7 @@
 #pragma once
 #include "include/raylib.h"
 #include <iostream>
+#include <vector>
 
 #define NUM_FRAMES 3
 
@@ -11,18 +12,25 @@ class Menu
 protected:
 	struct menuOptions
 	{
-		string one = " New Game";
-		string two = " Load Game";
-		string three = " Quit";
+		const char* one = "New Game";
+		const char* two = "Load Game";
+		const char* three = "Quit";
 	};
 
-	int screenWidth;
-	int screenHeight;
-	Sound fxButton;
-	Texture2D button;
-	float frameHeight;
-	Rectangle sourceRec;
-	Rectangle btnBounds;
+	struct rectangles
+	{
+		Rectangle textBox;
+		Rectangle textBox2;
+		Rectangle textBox3;
+	};
+
+	rectangles* recs = new rectangles();
+
+	int j = 0;
+
+	float screenWidth;
+	float screenHeight;
+
 	int btnState = 0;
 	bool btnAction = false;
 
