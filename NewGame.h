@@ -9,8 +9,9 @@ protected:
 		const char* one = "Linked List";
 		const char* two = "Double Linked List";
 		const char* three = "Binary Tree";
-		const char* four = "Adventure Game";
-		const char* five = "Back";
+		const char* four = "Hashing";
+		const char* five = "Adventure Game";
+		const char* six = "Back";
 	};
 
 	struct rectangles
@@ -20,6 +21,7 @@ protected:
 		Rectangle textBox3;
 		Rectangle textBox4;
 		Rectangle textBox5;
+		Rectangle textBox6;
 	};
 
 	rectangles* recs = new rectangles();

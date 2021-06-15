@@ -11,7 +11,8 @@ void NewGame::gameMenu()
 	recs->textBox2 = { screenWidth / 2 - 130, 150, 300, 35 };
 	recs->textBox3 = { screenWidth / 2 - 130, 200, 220, 35 };
 	recs->textBox4 = { screenWidth / 2 - 130, 250, 300, 35 };
-	recs->textBox5 = { screenWidth / 2 - 130, 300, 150, 35 };
+	recs->textBox5 = { screenWidth / 2 - 130, 300, 200, 35 };
+	recs->textBox6 = { screenWidth / 2 - 130, 350, 100, 35 };
 	mousePoint = { 0.0f,0.0f };
 
 	while (newGame)
@@ -25,7 +26,6 @@ void NewGame::gameMenu()
 void NewGame::update()
 {
 	mousePoint = GetMousePosition();
-
 
 	if (CheckCollisionPointRec(mousePoint, recs->textBox))
 	{
@@ -64,6 +64,14 @@ void NewGame::update()
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{
 			DrawText("HIT", (int)screenWidth / 2, 0, 40, BLACK);
+			DrawRectangleRec(recs->textBox5, RED);			
+		}
+	}
+	if (CheckCollisionPointRec(mousePoint, recs->textBox6))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			DrawText("HIT", (int)screenWidth / 2, 0, 40, BLACK);
 			DrawRectangleRec(recs->textBox5, RED);
 			newGame = false;
 		}
@@ -80,5 +88,6 @@ void NewGame::draw()
 	DrawText(menu->three, (int)recs->textBox3.x, (int)recs->textBox3.y, 40, MAROON);
 	DrawText(menu->four, (int)recs->textBox4.x, (int)recs->textBox4.y, 40, MAROON);
 	DrawText(menu->five, (int)recs->textBox5.x, (int)recs->textBox5.y, 40, MAROON);
+	DrawText(menu->six, (int)recs->textBox6.x, (int)recs->textBox6.y, 40, MAROON);
 	EndDrawing();
 }
