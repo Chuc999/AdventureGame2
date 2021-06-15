@@ -1,15 +1,15 @@
 #include "include/raylib.h"
+#include "Menu.h"
 
 int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+   
+    Menu* menu = new Menu();
+    menu->mainMenu();
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+    SetTargetFPS(120);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
     // Main game loop
@@ -19,14 +19,16 @@ int main(void)
         //----------------------------------------------------------------------------------
         // TODO: Update your variables here
         //----------------------------------------------------------------------------------
-
+        menu->update();
         // Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
         ClearBackground(RAYWHITE);
 
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+        menu->draw();
+
+        //DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
@@ -34,6 +36,7 @@ int main(void)
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
+    menu->DeInitialization();
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 
