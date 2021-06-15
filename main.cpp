@@ -1,5 +1,6 @@
 #include "include/raylib.h"
 #include "Menu.h"
+#include "Quit.h"
 
 int main(void)
 {
@@ -7,8 +8,9 @@ int main(void)
     //--------------------------------------------------------------------------------------
     
     Menu* menu = new Menu();
+    Quit* quit = new Quit();
     menu->mainMenu();
-
+    bool mainMenuOpen = true;
     SetTargetFPS(120);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
@@ -19,17 +21,23 @@ int main(void)
         //----------------------------------------------------------------------------------
         // TODO: Update your variables here
         //----------------------------------------------------------------------------------
-        menu->update();
-        // Draw
-        //----------------------------------------------------------------------------------
-        BeginDrawing();
+        while (menu->mainMenuOpen || mainMenuOpen)
+        {
+            menu->update();
+            // Draw
+            //----------------------------------------------------------------------------------
+            BeginDrawing();
 
-        ClearBackground(RAYWHITE);
+            ClearBackground(GRAY);
 
-        menu->draw();
+            menu->draw();
 
+            EndDrawing();
+        }       
+        
         //DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
-
+        BeginDrawing();
+        ClearBackground(GRAY);
         EndDrawing();
         //----------------------------------------------------------------------------------
     }

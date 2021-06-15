@@ -1,9 +1,6 @@
 #pragma once
 #include "include/raylib.h"
 #include <iostream>
-#include <vector>
-
-#define NUM_FRAMES 3
 
 using namespace std;
 
@@ -25,21 +22,21 @@ protected:
 	};
 
 	rectangles* recs = new rectangles();
-
-	int j = 0;
+	menuOptions* menu = new menuOptions();
 
 	float screenWidth;
 	float screenHeight;
 
 	int btnState = 0;
-	bool btnAction = false;
+
 
 	Vector2 mousePoint;
 
 public:
+	bool mainMenuOpen = true;
+
 	void mainMenu();
 	void update();
 	void draw();
 	void DeInitialization();
 };
-

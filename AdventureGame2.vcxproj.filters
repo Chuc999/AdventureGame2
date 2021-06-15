@@ -21,18 +21,16 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Quit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="newgamebuttonFire.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="newgamebutton.png">
-      <Filter>Resource Files</Filter>
-    </Image>
+    <ClInclude Include="Quit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

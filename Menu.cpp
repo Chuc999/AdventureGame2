@@ -1,8 +1,10 @@
 #include "Menu.h"
 #include "raylib.h"
+#include "Quit.h"
 
 void Menu::mainMenu()
 {
+	
 	screenWidth = 800.0f;
 	screenHeight = 450.0f;
 
@@ -18,11 +20,10 @@ void Menu::mainMenu()
 void Menu::update()
 {
 	mousePoint = GetMousePosition();
-	btnAction = false;
 
 	if (CheckCollisionPointRec(mousePoint, recs->textBox))
 	{
-		if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{
 			DrawText("HIT", (int)screenWidth / 2, 0, 40, BLACK);
 			DrawRectangleRec(recs->textBox, RED);
@@ -30,7 +31,7 @@ void Menu::update()
 	}
 	if (CheckCollisionPointRec(mousePoint, recs->textBox2))
 	{
-		if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{
 			DrawText("HIT", (int)screenWidth / 2, 0, 40, BLACK);
 			DrawRectangleRec(recs->textBox2, RED);
@@ -38,9 +39,11 @@ void Menu::update()
 	}
 	if (CheckCollisionPointRec(mousePoint, recs->textBox3))
 	{
-		if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
-		{
-			exit(0);
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{	
+			Quit* quit = new Quit();
+			mainMenuOpen = false;
+			quit->draw();
 		}
 	}
 	else
@@ -48,17 +51,11 @@ void Menu::update()
 		btnState = 0;
 	}
 
-	if (btnAction)
-	{
-
-		DrawText("HIT", (int)screenWidth / 2, 0, 40, BLACK);
-		DrawRectangleRec(recs->textBox, RED);
-	}
+	
 }
 
 void Menu::draw()
 {	
-	menuOptions* menu = new menuOptions();
 	ClearBackground(GRAY);
 	DrawText(menu->one, (int)recs->textBox.x, (int)recs->textBox.y, 40, MAROON);
 	DrawText(menu->two, (int)recs->textBox2.x, (int)recs->textBox2.y, 40, MAROON);
@@ -67,5 +64,6 @@ void Menu::draw()
 
 void Menu::DeInitialization()
 {
+	
 	CloseAudioDevice();     // Close audio device
 }
