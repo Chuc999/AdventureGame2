@@ -33,11 +33,7 @@ void Quit::draw()
 				quitMenuOpen = false;
 			}
 		}
-		else
-		{
-			btnState = 0;
-		}
-
+	
 		// Draw
 		BeginDrawing();
 		ClearBackground(BLANK);

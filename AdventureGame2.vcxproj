@@ -21,10 +21,12 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="NewGame.cpp" />
     <ClCompile Include="Quit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="NewGame.h" />
     <ClInclude Include="Quit.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

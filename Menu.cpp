@@ -1,6 +1,7 @@
 #include "Menu.h"
 #include "raylib.h"
 #include "Quit.h"
+#include "NewGame.h"
 
 void Menu::mainMenu()
 {
@@ -26,6 +27,8 @@ void Menu::update()
 		{
 			DrawText("HIT", (int)screenWidth / 2, 0, 40, BLACK);
 			DrawRectangleRec(recs->textBox, RED);
+			NewGame* newGame = new NewGame();
+			newGame->gameMenu();
 		}
 	}
 	if (CheckCollisionPointRec(mousePoint, recs->textBox2))
