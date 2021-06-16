@@ -1,4 +1,5 @@
 #include "NewGame.h"
+#include "Node.h"
 
 void NewGame::gameMenu()
 {
@@ -32,7 +33,10 @@ void NewGame::update()
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{
 			DrawText("HIT", (int)screenWidth / 2, 0, 40, BLACK);
-			DrawRectangleRec(recs->textBox, RED);			
+			DrawRectangleRec(recs->textBox, RED);
+			newGame = false;
+			Node* node = new Node();
+			node->init();
 		}
 	}
 	if (CheckCollisionPointRec(mousePoint, recs->textBox2))
