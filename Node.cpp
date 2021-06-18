@@ -1,17 +1,29 @@
 #include "Node.h"
+#include "Menu.h"
 
 void Node::draw(Node* n)
 {
 	BeginDrawing();	
-	ClearBackground(GRAY);
+	ClearBackground(BLACK);
 
+	DrawText("Push", (int)nodeRecs->pushBox.x + 40, (int)nodeRecs->pushBox.y - 20, 20, MAROON);
+	DrawRectangleRec(nodeRecs->pushBox, LIGHTGRAY);
+
+	DrawText("End", (int)nodeRecs->appendBox.x + 40, (int)nodeRecs->appendBox.y - 20, 20, MAROON);
+	DrawRectangleRec(nodeRecs->appendBox, LIGHTGRAY);
+
+	DrawText("Insert", (int)nodeRecs->insertAfterBox.x + 40, (int)nodeRecs->insertAfterBox.y - 20, 20, MAROON);
+	DrawRectangleRec(nodeRecs->insertAfterBox, LIGHTGRAY);
+
+	DrawText("Delete End", (int)nodeRecs->deleteBox.x + 20, (int)nodeRecs->deleteBox.y - 20, 20, MAROON);
+	DrawRectangleRec(nodeRecs->deleteBox, LIGHTGRAY);
 	
 	if (n != NULL)
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			DrawCircle((215 + (i * 65)), 120, 25, BLACK);
-			DrawText((TextFormat("%i", n->data)), (200 + (i * 65)), 100, 40, RED);
+			DrawCircle((165 + (i * 65)), 150, 25, WHITE);
+			DrawText((TextFormat("%i", n->data)), (150 + (i * 65)), 130, 40, RED);
 
 			if (n->next != NULL)
 			{
@@ -23,22 +35,33 @@ void Node::draw(Node* n)
 			}
 		}
 	}
+
+	DrawRectangleRec(nodeRecs->quitBox, BLANK);
+	DrawText("QUIT", 700, 400, 20, RED);
 	
 	EndDrawing();
 }
 
 void Node::update()
 {
-	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+	mousePoint = GetMousePosition();
+
+	if(CheckCollisionPointRec(mousePoint, nodeRecs->appendBox))
 	{
-		//nodeGame = false;
-		//Node::push(&head, 7);
-		Node::append(&head, 6);		
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			Node::append(&head, 6);
+		}
 	}
-	if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+	
+	if(CheckCollisionPointRec(mousePoint, nodeRecs->quitBox))
 	{
-		Node::insertAfter(head->next, 12);
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			nodeGame = false;
+		}
 	}
+	
 }
 
 void Node::init()
@@ -47,6 +70,7 @@ void Node::init()
 	ClearBackground(BLANK);
 	EndDrawing();
 
+	mousePoint = { 0.0f,0.0f };
 	
 	//Node* head = new Node();
 														// Start with the empty list
@@ -55,7 +79,7 @@ void Node::init()
 
 	//Node::push(&head, 7);												// Insert 7 at the beginning. So linked list becomes 7-> 6-> NULL
 
-	Node::push(&head, 1);												// Insert 1 at the beginning. So linked list becomes 1-> 7-> 6-> NULL	
+	//Node::push(&head, 1);												// Insert 1 at the beginning. So linked list becomes 1-> 7-> 6-> NULL	
 
 	//Node::append(&head, 4);												// Insert 4 at the end. So linked list becomes 1-> 7-> 6-> 4-> NULL
 
@@ -129,4 +153,10 @@ void Node::append(Node** head_ref, int new_data)
 
 	last->next = new_node;														// 6. Change the next of last node
 	return;
+}
+
+void Node::deleteEnd(Node* head)
+{
+	Node* new_node = new Node();
+
 }
