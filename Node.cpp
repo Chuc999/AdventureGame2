@@ -53,6 +53,22 @@ void Node::update()
 			Node::append(&head, 6);
 		}
 	}
+
+	if (CheckCollisionPointRec(mousePoint, nodeRecs->pushBox))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			Node::push(&head, 7);
+		}
+	}
+
+	if (CheckCollisionPointRec(mousePoint, nodeRecs->deleteBox))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			Node::deleteEnd(&head);
+		}
+	}
 	
 	if(CheckCollisionPointRec(mousePoint, nodeRecs->quitBox))
 	{
@@ -155,8 +171,28 @@ void Node::append(Node** head_ref, int new_data)
 	return;
 }
 
-void Node::deleteEnd(Node* head)
+void Node::deleteEnd(Node** head)
 {
-	Node* new_node = new Node();
+	Node* delete_node = new Node();
+	
+	Node* last = *head;
 
+	if (*head == NULL)
+	{
+		return;
+	}
+
+	while (last->next != NULL)
+	{	
+		last = last->next;
+	}
+
+	int i = getHeadData(*head);
+	
+	last->data = i;
+}
+
+int Node::getHeadData(Node* head)
+{	
+	return head->data;
 }

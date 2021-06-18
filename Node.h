@@ -25,7 +25,9 @@ protected:
 	bool valueBoxEditMode = false;
 	
 	int data;
+	int dataPrev;
 	Node* next;
+	Node* prev;
 
 	Node* head = NULL;
 	void update();
@@ -33,7 +35,9 @@ protected:
 	void push(Node**, int);
 	void insertAfter(Node*, int);
 	void append(Node**, int);
-	void deleteEnd(Node*);
+	void deleteEnd(Node**);
+
+	int getHeadData(Node*);
 
 	Vector2 mousePoint;
 
