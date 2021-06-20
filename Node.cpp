@@ -15,6 +15,9 @@ void Node::draw(Node* n)
 	DrawText("Insert", (int)nodeRecs->insertAfterBox.x + 40, (int)nodeRecs->insertAfterBox.y - 20, 20, MAROON);
 	DrawRectangleRec(nodeRecs->insertAfterBox, LIGHTGRAY);
 
+	DrawText("Reverse List", (int)nodeRecs->reverseBox.x + 20, (int)nodeRecs->reverseBox.y - 20, 20, MAROON);
+	DrawRectangleRec(nodeRecs->reverseBox, LIGHTGRAY);
+
 	DrawText("Delete End", (int)nodeRecs->deleteBox.x + 20, (int)nodeRecs->deleteBox.y - 20, 20, MAROON);
 	DrawRectangleRec(nodeRecs->deleteBox, LIGHTGRAY);
 	
@@ -66,7 +69,7 @@ void Node::update()
 	{
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{
-			Node::deleteEnd(&head);
+			Node::reverseList(&head);
 		}
 	}
 	
@@ -88,8 +91,7 @@ void Node::init()
 
 	mousePoint = { 0.0f,0.0f };
 	
-	//Node* head = new Node();
-														// Start with the empty list
+	//Node* head = new Node();												// Start with the empty list
 
 	//Node::append(&head, 6);												// Insert 6. So linked list becomes 6->NULL
 
@@ -122,8 +124,14 @@ void Node::push(Node** head_ref, int new_data)
 	new_node->data = new_data;									// 2. put in the data
 
 	new_node->next = (*head_ref);								// 3. Make next of new node as head
+	new_node->prev = NULL;										
 
-	(*head_ref) = new_node;										// 4. move the head to point to the new node
+	if ((*head_ref) != NULL)									// 4. previous of head is new node
+	{
+		(*head_ref)->prev = new_node;
+	}
+
+	(*head_ref) = new_node;										// 5. move the head to point to the new node
 }
 
 
@@ -132,6 +140,7 @@ void Node::insertAfter(Node* prev_node, int new_data)
 {
 	if (prev_node == NULL)														// 1. Check if the given prev_node is NULL
 	{
+
 		cout << " The given previous node connot be NULL" << endl << endl;
 		return;
 	}
@@ -143,6 +152,13 @@ void Node::insertAfter(Node* prev_node, int new_data)
 	new_node->next = prev_node->next;											// 4. Make next of new node as next of prev_node
 
 	prev_node->next = new_node;													// 5. Move the next of prev_node as new_node
+
+	new_node->prev = prev_node;													// 6. now set prev of newnode to prev node
+
+	if (new_node->next != NULL)													// 7. set prev of new node's next to newnode
+	{
+		new_node->next->prev = new_node;
+	}
 }
 
 // Given a reference (pointer to pointer) to the head of a list and an int, appends a new node at the end
@@ -158,6 +174,7 @@ void Node::append(Node** head_ref, int new_data)
 
 	if (*head_ref == NULL)														// 4. If the Linked List is empty, then make the new node as head
 	{
+		new_node->prev = NULL;
 		*head_ref = new_node;
 		return;
 	}
@@ -168,28 +185,36 @@ void Node::append(Node** head_ref, int new_data)
 	}
 
 	last->next = new_node;														// 6. Change the next of last node
+
+	new_node->prev = last;
 	return;
 }
 
-void Node::deleteEnd(Node** head)
+void Node::reverseList(Node** head)
 {
-	Node* delete_node = new Node();
-	
-	Node* last = *head;
+	Node* left = *head;
+	Node* right = *head;
 
-	if (*head == NULL)
+	if ((*head) == NULL)
 	{
 		return;
 	}
-
-	while (last->next != NULL)
-	{	
-		last = last->next;
+	while (right->next != nullptr)
+	{
+		right = right->next;
 	}
 
-	int i = getHeadData(*head);
+	while (left != right && left->prev != right)
+	{
+		swap(left->data, right->data);
+		left = left->next;
+		right = right->prev;
+	}
+}
+
+void Node::deleteEnd(Node* head, int del_item)
+{
 	
-	last->data = i;
 }
 
 int Node::getHeadData(Node* head)

@@ -11,10 +11,11 @@ class Node
 protected:
 	struct rects
 	{
-		Rectangle pushBox		{ 40, 50, 150, 50 };
-		Rectangle appendBox		{ 200, 50, 150, 50 };
-		Rectangle insertAfterBox{ 360, 50, 150, 50 };
-		Rectangle deleteBox		{ 520, 50, 150, 50 };
+		Rectangle pushBox		{ 40, 50, 100, 50 };
+		Rectangle appendBox		{ 200, 50, 100, 50 };
+		Rectangle insertAfterBox{ 360, 50, 100, 50 };
+		Rectangle reverseBox	{ 420, 50, 100, 50 };
+		Rectangle deleteBox		{ 580, 50, 100, 50 };
 
 		Rectangle quitBox		{ 700, 400, 50, 20 };
 	};
@@ -28,6 +29,8 @@ protected:
 	int dataPrev;
 	Node* next;
 	Node* prev;
+	Node* current;
+
 
 	Node* head = NULL;
 	void update();
@@ -35,8 +38,8 @@ protected:
 	void push(Node**, int);
 	void insertAfter(Node*, int);
 	void append(Node**, int);
-	void deleteEnd(Node**);
-
+	void deleteEnd(Node*, int);
+	void reverseList(Node**);
 	int getHeadData(Node*);
 
 	Vector2 mousePoint;
