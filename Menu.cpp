@@ -32,8 +32,7 @@ void Menu::update()
 	{
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{
-			DrawText("HIT", (int)screenWidth / 2, 0, 40, BLACK);
-			DrawRectangleRec(recsMain->textBox2, RED);
+			
 		}
 	}
 	if (CheckCollisionPointRec(mousePoint, recsMain->textBox3))

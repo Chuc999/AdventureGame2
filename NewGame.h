@@ -6,8 +6,7 @@ class NewGame : protected Menu
 protected:
 	struct menuOptions
 	{
-		const char* one = "Linked List";
-		const char* two = "Double Linked List";
+		const char* two = "Linked List";
 		const char* three = "Binary Tree";
 		const char* four = "Hashing";
 		const char* five = "Adventure Game";

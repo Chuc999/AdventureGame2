@@ -8,8 +8,7 @@ void NewGame::gameMenu()
 
 	SetWindowSize((int)screenWidth, (int)screenHeight);
 
-	recs->textBox= { screenWidth / 2 - 130, 100, 220, 35 };
-	recs->textBox2 = { screenWidth / 2 - 130, 150, 300, 35 };
+	recs->textBox2 = { screenWidth / 2 - 130, 150, 220, 35 };
 	recs->textBox3 = { screenWidth / 2 - 130, 200, 220, 35 };
 	recs->textBox4 = { screenWidth / 2 - 130, 250, 300, 35 };
 	recs->textBox5 = { screenWidth / 2 - 130, 300, 200, 35 };
@@ -28,15 +27,6 @@ void NewGame::update()
 {
 	mousePoint = GetMousePosition();
 
-	if (CheckCollisionPointRec(mousePoint, recs->textBox))
-	{
-		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-		{			
-			newGame = false;
-			Node* node = new Node();
-			node->init();
-		}
-	}
 	if (CheckCollisionPointRec(mousePoint, recs->textBox2))
 	{
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
@@ -85,8 +75,7 @@ void NewGame::draw()
 {
 	BeginDrawing();
 	ClearBackground(BLANK);
-	DrawText("What do you want to play?", (int)recs->textBox.x - 130, 0, 40, RED);
-	DrawText(menu->one, (int)recs->textBox.x, (int)recs->textBox.y, 40, MAROON);
+	DrawText("What do you want to play?", (int)recs->textBox2.x - 130, 0, 40, RED);
 	DrawText(menu->two, (int)recs->textBox2.x, (int)recs->textBox2.y, 40, MAROON);
 	DrawText(menu->three, (int)recs->textBox3.x, (int)recs->textBox3.y, 40, MAROON);
 	DrawText(menu->four, (int)recs->textBox4.x, (int)recs->textBox4.y, 40, MAROON);
