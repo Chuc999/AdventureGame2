@@ -84,7 +84,6 @@ void Node::draw(Node* n, int j)
 		}
 	}
 	// Shows Rectangles used for deleting node that is clicked on. Used for debugging
-
 	/*DrawRectangleRec(testRecs->listOne, BLUE);			
 	DrawRectangleRec(testRecs->listTwo, BLUE);
 	DrawRectangleRec(testRecs->listThree, BLUE);

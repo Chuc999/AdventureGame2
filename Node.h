@@ -1,8 +1,6 @@
 #pragma once
 #include "include/raylib.h"
-
 #include <iostream>
-
 
 using namespace std;
 
