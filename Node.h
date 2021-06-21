@@ -51,7 +51,7 @@ protected:
 	void append(Node**, int);
 	void deleteEnd(Node**,int);
 	void reverseList(Node**);
-	int getHeadData(Node*);
+	int getHeadData(Node*, int);
 	void sort(Node*);
 
 	Vector2 mousePoint = { 0.0f,0.0f };

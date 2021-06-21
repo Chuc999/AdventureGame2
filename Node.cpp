@@ -67,6 +67,18 @@ void Node::draw(Node* n, int j)
 	DrawText("Number of Nodes - ", 10, 400, 10, RED);
 	DrawText((TextFormat("%i", j)), 110, 400, 10, RED);
 
+	if (head != NULL)
+	{
+		DrawText("First Nod - ", 130, 400, 10, RED);
+		int f = getHeadData(head,0);
+		DrawText((TextFormat("%i", f)), 195, 400, 10, RED);
+
+		DrawText("Last Nod - ", 220, 400, 10, RED);
+		int l = getHeadData(head, 1);
+		DrawText((TextFormat("%i", l)), 280, 400, 10, RED);
+	}
+
+
 	DrawRectangleRec(nodeRecs->quitBox, BLANK);
 	DrawText("QUIT", 700, 400, 20, RED);
 	
@@ -677,7 +689,17 @@ void Node::deleteEnd(Node** head, int n)
 }
 
 
-int Node::getHeadData(Node* head)
+int Node::getHeadData(Node* head, int n)
 {	
-	return head->data;
+	if (n != 1)
+	{
+		return head->data;
+	}
+	else
+	{
+		reverseList(&head);
+		int i = head->data;
+		reverseList(&head);
+		return i;
+	}
 }
