@@ -31,9 +31,7 @@ void NewGame::update()
 	if (CheckCollisionPointRec(mousePoint, recs->textBox))
 	{
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-		{
-			DrawText("HIT", (int)screenWidth / 2, 0, 40, BLACK);
-			DrawRectangleRec(recs->textBox, RED);
+		{			
 			newGame = false;
 			Node* node = new Node();
 			node->init();
@@ -43,8 +41,9 @@ void NewGame::update()
 	{
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{
-			DrawText("HIT", (int)screenWidth / 2, 0, 40, BLACK);
-			DrawRectangleRec(recs->textBox2, RED);
+			newGame = false;
+			Node* node = new Node();
+			node->init();
 		}
 	}
 	if (CheckCollisionPointRec(mousePoint, recs->textBox3))

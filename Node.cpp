@@ -1,25 +1,28 @@
 #include "Node.h"
 #include "Menu.h"
 
-void Node::draw(Node* n)
+void Node::draw(Node* n, int j)
 {
 	BeginDrawing();	
 	ClearBackground(BLACK);
 
-	DrawText("Push", (int)nodeRecs->pushBox.x + 40, (int)nodeRecs->pushBox.y - 20, 20, MAROON);
+	DrawText("Push", (int)nodeRecs->pushBox.x + 20, (int)nodeRecs->pushBox.y - 20, 20, MAROON);
 	DrawRectangleRec(nodeRecs->pushBox, LIGHTGRAY);
 
-	DrawText("End", (int)nodeRecs->appendBox.x + 40, (int)nodeRecs->appendBox.y - 20, 20, MAROON);
+	DrawText("End", (int)nodeRecs->appendBox.x + 20, (int)nodeRecs->appendBox.y - 20, 20, MAROON);
 	DrawRectangleRec(nodeRecs->appendBox, LIGHTGRAY);
 
-	DrawText("Insert", (int)nodeRecs->insertAfterBox.x + 40, (int)nodeRecs->insertAfterBox.y - 20, 20, MAROON);
-	DrawRectangleRec(nodeRecs->insertAfterBox, LIGHTGRAY);
+	DrawText("Sort", (int)nodeRecs->sortBox.x + 20, (int)nodeRecs->sortBox.y - 20, 20, MAROON);
+	DrawRectangleRec(nodeRecs->sortBox, LIGHTGRAY);
 
-	DrawText("Reverse List", (int)nodeRecs->reverseBox.x + 20, (int)nodeRecs->reverseBox.y - 20, 20, MAROON);
+	DrawText("Reverse", (int)nodeRecs->reverseBox.x, (int)nodeRecs->reverseBox.y - 20, 20, MAROON);
 	DrawRectangleRec(nodeRecs->reverseBox, LIGHTGRAY);
 
-	DrawText("Delete End", (int)nodeRecs->deleteBox.x + 20, (int)nodeRecs->deleteBox.y - 20, 20, MAROON);
+	DrawText("Del First", (int)nodeRecs->deleteBox.x, (int)nodeRecs->deleteBox.y - 20, 20, MAROON);
 	DrawRectangleRec(nodeRecs->deleteBox, LIGHTGRAY);
+
+	DrawText("Del End", (int)nodeRecs->deleteBox2.x + 10, (int)nodeRecs->deleteBox2.y - 20, 20, MAROON);
+	DrawRectangleRec(nodeRecs->deleteBox2, LIGHTGRAY);
 	
 	if (n != NULL)
 	{
@@ -38,6 +41,31 @@ void Node::draw(Node* n)
 			}
 		}
 	}
+	// Shows Rectangles used for deleting node that is clicked on. Used for debugging
+
+	/*DrawRectangleRec(testRecs->listOne, BLUE);			
+	DrawRectangleRec(testRecs->listTwo, BLUE);
+	DrawRectangleRec(testRecs->listThree, BLUE);
+	DrawRectangleRec(testRecs->listFour, BLUE);
+	DrawRectangleRec(testRecs->listFive, BLUE);
+	DrawRectangleRec(testRecs->listSix, BLUE);
+	DrawRectangleRec(testRecs->listSeven, BLUE);
+	DrawRectangleRec(testRecs->listEight, BLUE);*/
+
+	if (j > 7)
+	{
+		DrawText("List is Full", 360, 400, 10, RED);
+	}
+	if (j == 0)
+	{
+		DrawText("List is Empty", 360, 400, 10, RED);
+	}
+
+	DrawText("Left Click on node to delete", 250, 250, 20, RED);
+	DrawText("Right Click on node to insert next to it", 250, 270, 20, RED);
+
+	DrawText("Number of Nodes - ", 10, 400, 10, RED);
+	DrawText((TextFormat("%i", j)), 110, 400, 10, RED);
 
 	DrawRectangleRec(nodeRecs->quitBox, BLANK);
 	DrawText("QUIT", 700, 400, 20, RED);
@@ -53,7 +81,16 @@ void Node::update()
 	{
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{
-			Node::append(&head, 6);
+			int j = countNodes(head);
+			if (j > 7)
+			{
+				return;
+			}
+			else
+			{
+			int i = GetRandomValue(1, 50);
+			Node::append(&head, i);
+			}
 		}
 	}
 
@@ -61,7 +98,39 @@ void Node::update()
 	{
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{
-			Node::push(&head, 7);
+			int j = countNodes(head);
+			if (j > 7)
+			{
+				return;
+			}
+			else
+			{
+			int i = GetRandomValue(1, 50);
+			Node::push(&head, i);
+			}
+		}
+	}
+
+	if (CheckCollisionPointRec(mousePoint, nodeRecs->sortBox))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			if (head == NULL)
+			{
+				return;
+			}
+			else
+			{			
+			Node::sort(head);
+			}
+		}
+	}
+
+	if (CheckCollisionPointRec(mousePoint, nodeRecs->reverseBox))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			Node::reverseList(&head);
 		}
 	}
 
@@ -69,10 +138,273 @@ void Node::update()
 	{
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{
-			Node::reverseList(&head);
+			if (head == NULL)
+			{
+				return;
+			}
+			else
+			{
+				Node::deleteEnd(&head, 1);
+			}
+
+		}
+	}
+
+	if (CheckCollisionPointRec(mousePoint, nodeRecs->deleteBox2))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			if (head == NULL)
+			{
+				return;
+			}
+			else
+			{
+			Node::deleteEnd(&head, 0);
+			}
+
 		}
 	}
 	
+	if (CheckCollisionPointRec(mousePoint, testRecs->listOne))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			if (head == NULL)
+			{
+				return;
+			}
+			else
+			{
+				Node::oldDelete(&head, 1);
+			}
+		}
+		if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+		{
+			int j = countNodes(head);
+			if (j > 7)
+			{
+				return;
+			}
+			else if (head == NULL)
+			{
+				return;
+			}
+			else
+			{
+				int i = GetRandomValue(1, 50);
+				Node::insertAfter(head, i);
+			}
+		}
+	}
+
+	if (CheckCollisionPointRec(mousePoint, testRecs->listTwo))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			if (head == NULL)
+			{
+				return;
+			}
+			else
+			{
+				Node::oldDelete(&head, 2);
+			}
+		}
+		if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+		{
+			int j = countNodes(head);
+			if (j > 7)
+			{
+				return;
+			}
+			else if (head == NULL || head->next == NULL)
+			{
+				return;
+			}
+			else
+			{
+				int i = GetRandomValue(1, 50);
+				Node::insertAfter(head->next, i);
+			}
+		}
+	}
+
+	if (CheckCollisionPointRec(mousePoint, testRecs->listThree))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			if (head == NULL)
+			{
+				return;
+			}
+			else
+			{
+				Node::oldDelete(&head, 3);
+			}
+		}
+		if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+		{
+			int j = countNodes(head);
+			if (j > 7)
+			{
+				return;
+			}
+			else if (head == NULL || head->next->next == NULL)
+			{
+				return;
+			}
+			else
+			{
+				int i = GetRandomValue(1, 50);
+				Node::insertAfter(head->next->next, i);
+			}
+		}
+	}
+
+	if (CheckCollisionPointRec(mousePoint, testRecs->listFour))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			if (head == NULL)
+			{
+				return;
+			}
+			else
+			{
+				Node::oldDelete(&head, 4);
+			}
+		}
+		if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+		{
+			int j = countNodes(head);
+			if (j > 7)
+			{
+				return;
+			}
+			else if (head == NULL || head->next->next->next == NULL)
+			{
+				return;
+			}
+			else
+			{
+				int i = GetRandomValue(1, 50);
+				Node::insertAfter(head->next->next->next, i);
+			}
+		}
+	}
+
+	if (CheckCollisionPointRec(mousePoint, testRecs->listFive))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			if (head == NULL)
+			{
+				return;
+			}
+			else
+			{
+				Node::oldDelete(&head, 5);
+			}
+		}
+		if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+		{
+			int j = countNodes(head);
+			if (j > 7)
+			{
+				return;
+			}
+			else if (head == NULL || head->next->next->next->next == NULL)
+			{
+				return;
+			}
+			else
+			{
+				int i = GetRandomValue(1, 50);
+				Node::insertAfter(head->next->next->next->next, i);
+			}
+		}
+	}
+
+	if (CheckCollisionPointRec(mousePoint, testRecs->listSix))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			if (head == NULL)
+			{
+				return;
+			}
+			else
+			{
+				Node::oldDelete(&head, 6);
+			}
+		}
+		if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+		{
+			int j = countNodes(head);
+			if (j > 7)
+			{
+				return;
+			}
+			else if (head == NULL || head->next->next->next->next->next == NULL)
+			{
+				return;
+			}
+			else
+			{
+				int i = GetRandomValue(1, 50);
+				Node::insertAfter(head->next->next->next->next->next, i);
+			}
+		}
+	}
+
+	if (CheckCollisionPointRec(mousePoint, testRecs->listSeven))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			if (head == NULL)
+			{
+				return;
+			}
+			else
+			{
+				Node::oldDelete(&head, 7);
+			}
+		}
+		if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+		{
+			int j = countNodes(head);
+			if (j > 7)
+			{
+				return;
+			}
+			else if (head == NULL || head->next->next->next->next->next->next == NULL)
+			{
+				return;
+			}
+			else
+			{
+				int i = GetRandomValue(1, 50);
+				Node::insertAfter(head->next->next->next->next->next->next, i);
+			}
+		}
+	}
+
+	if (CheckCollisionPointRec(mousePoint, testRecs->listEight))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			if (head == NULL)
+			{
+				return;
+			}
+			else
+			{
+				Node::oldDelete(&head, 8);
+			}
+		}	
+	}
+
 	if(CheckCollisionPointRec(mousePoint, nodeRecs->quitBox))
 	{
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
@@ -89,31 +421,54 @@ void Node::init()
 	ClearBackground(BLANK);
 	EndDrawing();
 
-	mousePoint = { 0.0f,0.0f };
-	
-	//Node* head = new Node();												// Start with the empty list
-
-	//Node::append(&head, 6);												// Insert 6. So linked list becomes 6->NULL
-
-	//Node::push(&head, 7);												// Insert 7 at the beginning. So linked list becomes 7-> 6-> NULL
-
-	//Node::push(&head, 1);												// Insert 1 at the beginning. So linked list becomes 1-> 7-> 6-> NULL	
-
-	//Node::append(&head, 4);												// Insert 4 at the end. So linked list becomes 1-> 7-> 6-> 4-> NULL
-
-	//Node::insertAfter(head->next, 8);									// Insert 8, after 7. So linked list becomes 1-> 7-> 8-> 6-> 4-> NULL
-
-	//Node::append(&head, 3);
-
-	//Node::push(&head, 10);
-
-	//Node::insertAfter(head->next, 4);
-
 	while (nodeGame)
 	{
 		Node::update();
-		Node::draw(head);		
+		int i = countNodes(head);
+		Node::draw(head, i);		
 	}
+}
+
+int Node::countNodes(Node* head)
+{
+	Node* temp = head;
+	int i = 0;
+	while (temp != NULL)
+	{
+		i++;
+		temp = temp->next;
+	}
+	return i;
+}
+
+void Node::sort(Node* head)
+{
+	int swapped;
+
+	Node* temp1;
+	Node* temp2 = NULL;
+
+	if (head == NULL)
+	{
+		return;
+	}
+
+	do
+	{
+		swapped = 0;
+		temp1 = head;
+
+		while (temp1->next != temp2)
+		{
+			if (temp1->data > temp1->next->data)
+			{
+				swap(temp1->data, temp1->next->data);
+				swapped = 1;
+			}
+			temp1 = temp1->next;
+		}
+		temp2 = temp1;
+	} 	while (swapped);
 }
 
 // Given a reference (pointer to pointer) to the head of a list and an int, inserts a new node on the front of the list.
@@ -190,6 +545,7 @@ void Node::append(Node** head_ref, int new_data)
 	return;
 }
 
+// Function to reverse the order of the list. I found out how to do this by accident then made the code better so it was more efficent than i had it
 void Node::reverseList(Node** head)
 {
 	Node* left = *head;
@@ -211,11 +567,115 @@ void Node::reverseList(Node** head)
 		right = right->prev;
 	}
 }
-
-void Node::deleteEnd(Node* head, int del_item)
+// Orignal delete function i wrote before i thought of a better way using my reverse function
+// 
+void Node::oldDelete(Node** head, int i)
 {
+	//int i;
+
+	/*if (n == 1)
+	{
+		i = 1;
+	}
+	else
+	{
+		i = countNodes(*head);
+	}*/
 	
+	Node* del_item = *head;
+
+	switch (i)
+	{
+	case 0:
+		del_item = NULL;
+		break;
+	case 1:
+		del_item = *head;
+		break;
+	case 2:
+		del_item = del_item->next;
+		break;
+	case 3:
+		del_item = del_item->next->next;
+		break;
+	case 4:
+		del_item = del_item->next->next->next;
+		break;
+	case 5:
+		del_item = del_item->next->next->next->next;
+		break;
+	case 6:
+		del_item = del_item->next->next->next->next->next;
+		break;
+	case 7:
+		del_item = del_item->next->next->next->next->next->next;
+		break;
+	case 8:
+		del_item = del_item->next->next->next->next->next->next->next;
+		break;
+	}
+
+	if (*head == NULL || del_item == NULL)
+	{
+		return;
+	}
+
+	if (*head == del_item)
+	{
+		*head = del_item->next;
+	}
+
+	if (del_item->next != NULL)
+	{
+		del_item->next->prev = del_item->prev;
+	}
+
+	if (del_item->prev != NULL)
+	{
+		del_item->prev->next = del_item->next;
+	}
+
+	free(del_item);
+	return;
 }
+
+void Node::deleteEnd(Node** head, int n)
+{
+	if (n != 1)
+	{
+		reverseList(head);
+	}	
+
+	Node* del_item = *head;
+
+	if (*head == NULL || del_item == NULL)
+	{
+		return;
+	}
+
+	if (*head == del_item)
+	{
+		*head = del_item->next;
+	}
+
+	if (del_item->next != NULL)
+	{
+		del_item->next->prev = del_item->prev;
+	}
+
+	if (del_item->prev != NULL)
+	{
+		del_item->prev->next = del_item->next;
+	}
+
+	free(del_item);
+	if (n != 1)
+	{
+		reverseList(head);
+	}
+	return;
+}
+
 
 int Node::getHeadData(Node* head)
 {	

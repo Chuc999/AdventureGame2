@@ -21,13 +21,13 @@ protected:
 		Rectangle textBox3;
 	};
 
-	rectangles* recs = new rectangles();
+	rectangles* recsMain = new rectangles();
 	menuOptions* menu = new menuOptions();
 
-	float screenWidth;
-	float screenHeight;
+	float screenWidth = 800.0f;
+	float screenHeight = 450.0f;
 
-	Vector2 mousePoint;
+	Vector2 mousePoint = { 0.0f,0.0f };
 
 public:
 	void mainMenu();
