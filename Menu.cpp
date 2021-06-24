@@ -47,7 +47,7 @@ void Menu::update()
 
 void Menu::draw()
 {	
-	ClearBackground(GRAY);
+	//ClearBackground(RAYWHITE);
 	DrawText(menu->one, (int)recsMain->textBox.x, (int)recsMain->textBox.y, 40, MAROON);
 	DrawText(menu->two, (int)recsMain->textBox2.x, (int)recsMain->textBox2.y, 40, MAROON);
 	DrawText(menu->three, (int)recsMain->textBox3.x, (int)recsMain->textBox3.y, 40, MAROON);
