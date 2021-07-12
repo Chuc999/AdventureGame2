@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BinaryTree.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="NewGame.cpp" />
@@ -26,6 +27,7 @@
     <ClCompile Include="Quit.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BinaryTree.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="NewGame.h" />
     <ClInclude Include="Node.h" />

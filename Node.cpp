@@ -603,6 +603,7 @@ void Node::init()
 	}
 }
 
+// Counts how many items in list
 int Node::countNodes(Node* head)
 {
 	Node* temp = head;
@@ -615,6 +616,7 @@ int Node::countNodes(Node* head)
 	return i;
 }
 
+// Sorts list
 void Node::sort(Node* head)
 {
 	int swapped;

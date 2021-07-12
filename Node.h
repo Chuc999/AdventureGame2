@@ -6,7 +6,7 @@ using namespace std;
 
 class Node
 {
-protected:
+public:
 	struct rects
 	{
 		Rectangle pushBox		{ 40, 50, 100, 50 };
