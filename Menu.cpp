@@ -5,6 +5,7 @@
 
 void Menu::mainMenu()
 {
+	
 	InitWindow((int)screenWidth, (int)screenHeight, "MAIN MENU - Test One");
 
 	InitAudioDevice();

@@ -140,11 +140,11 @@ void BinaryTree::Draw(BinaryTree* root)
 
 
 	DrawCircle(500, 50, 25, WHITE); // Key
-	DrawTextRec(font1,(TextFormat("%i", root->key)), treeRecs->keyBranch, 30, 2, true, RED);
+	DrawTextRec(font1,(TextFormat("%1", root->key)), treeRecs->keyBranch, 30, 2, true, RED);
 	//DrawRectangleRec(treeRecs->keyBranch, RED);
 
 	DrawCircle(700, 100, 25, WHITE); // right
-	DrawTextRec(font1, (TextFormat("%i", root->right)), treeRecs->rightBranch, 30, 2, true, RED);
+	DrawTextRec(font1, (TextFormat("%1", root->right)), treeRecs->rightBranch, 30, 2, false, RED);
 	DrawCircle(600, 200, 25, WHITE); // right->left
 	DrawCircle(800, 200, 25, WHITE); // right->right
 	//DrawRectangleRec(treeRecs->rightBranch, RED);
