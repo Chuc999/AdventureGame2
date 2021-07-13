@@ -1,5 +1,6 @@
 #include "NewGame.h"
 #include "Node.h"
+#include "BinaryTree.h"
 
 void NewGame::gameMenu()
 {
@@ -40,8 +41,11 @@ void NewGame::update()
 	{
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{
-			DrawText("HIT", (int)screenWidth / 2, 0, 40, BLACK);
-			DrawRectangleRec(recs->textBox3, RED);
+			/*DrawText("HIT", (int)screenWidth / 2, 0, 40, BLACK);
+			DrawRectangleRec(recs->textBox3, RED);*/
+			newGame = false;
+			BinaryTree* tree = new BinaryTree();
+			tree->init();
 		}
 	}
 	if (CheckCollisionPointRec(mousePoint, recs->textBox4))

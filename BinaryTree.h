@@ -1,12 +1,17 @@
 #pragma once
-#include "include/raylib.h"
-#include <iostream>
+//#include "include/raylib.h"
+//#include <iostream>
+#include "Menu.h"
 
 using namespace std;
 
-class BinaryTree
+class BinaryTree : protected Menu
 {
 protected:
+	struct recs
+	{
+		Rectangle quitBox{ 700, 400, 50, 20 };
+	};
 
 	struct Tree
 	{
@@ -25,10 +30,14 @@ protected:
 			right = NULL;
 		}
 	};
-	
-public:
-	void init();
+
+	recs* treeRecs = new recs();
 	void update();
 	void Draw();
+
+public:
+	bool binaryGame = true;
+	void init();
+
 };
 

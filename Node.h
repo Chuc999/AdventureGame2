@@ -35,6 +35,7 @@ public:
 
 	int valueBoxValue = 0;
 	bool valueBoxEditMode = false;
+	int loc = 1;
 	
 	int data = 0;
 	Node* next = NULL;
@@ -51,6 +52,8 @@ public:
 	void reverseList(Node**);
 	int getHeadData(Node*, int);
 	void sort(Node*);
+
+	void search(Node* head, int input);
 
 	Vector2 mousePoint = { 0.0f,0.0f };
 

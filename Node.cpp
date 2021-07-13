@@ -83,6 +83,7 @@ void Node::draw(Node* n, int j)
 			}
 		}
 	}
+	
 	// Shows Rectangles used for deleting node that is clicked on. Used for debugging
 	/*DrawRectangleRec(testRecs->listOne, BLUE);			
 	DrawRectangleRec(testRecs->listTwo, BLUE);
@@ -184,7 +185,8 @@ void Node::update()
 	{
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{
-			Node::reverseList(&head);
+			//Node::reverseList(&head);
+			Node::search(head, 25);
 		}
 	}
 
@@ -491,8 +493,8 @@ void Node::update()
 			}
 			else
 			{
-				int i = GetRandomValue(1, 50);
-				Node::insertAfter(head->next->next->next->next->next, i);
+				//int i = GetRandomValue(1, 50);
+				Node::insertAfter(head->next->next->next->next->next, 25);
 			}
 		}
 		if (IsMouseButtonPressed(MOUSE_MIDDLE_BUTTON))
@@ -860,5 +862,22 @@ int Node::getHeadData(Node* head, int n)
 		int i = head->data;
 		reverseList(&head);
 		return i;
+	}
+}
+
+void Node::search(Node* head, int input)
+{	
+	Node* temp = head;
+	Node* temp2 = new Node();
+	if (temp->data == input)
+	{
+		// Found location
+		cout << "found location " << loc << endl;
+	}
+	else
+	{
+		loc++;
+		temp2 = temp->next;
+		search(temp2, input);
 	}
 }
