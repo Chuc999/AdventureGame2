@@ -11,12 +11,15 @@ protected:
 	struct recs
 	{
 		Rectangle quitBox	{ 900, 550, 50, 20 };
+		
 		Rectangle keyBranch	{ 485, 35, 40, 40 };
 		Rectangle leftBranch{ 285, 85, 40, 40 };
 		Rectangle rightBranch{ 685, 85, 40, 40 };
 	};
 
-	int key;
+	
+
+	int key = 0;
 	BinaryTree* left = NULL;
 	BinaryTree* right = NULL;
 
@@ -32,15 +35,15 @@ protected:
 	void addTreeRight(BinaryTree* right, int input);
 	void addTreeLeft(BinaryTree* left, int input);
 
-
+	void delBranch(BinaryTree* root, BinaryTree* branch);
+	BinaryTree* deletion(BinaryTree* root, int key);
 
 	float screenWidth = 800.0f;
 	float screenHeight = 600.0f;
 
 	recs* treeRecs = new recs();
-	void update();
+	void update(BinaryTree* root);
 	void Draw(BinaryTree* root);
-	Font font1 = LoadFont("resources/custom_mecha.png");
 
 public:
 	bool binaryGame = true;
