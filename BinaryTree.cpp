@@ -16,6 +16,8 @@ void BinaryTree::init()
 	addBranch(root, 40);
 	addBranch(root, 8);
 	addBranch(root, 15);
+	addBranch(root, 14);
+	addBranch(root, 21);
 
 	BeginDrawing();
 	ClearBackground(BLANK);
@@ -122,107 +124,70 @@ void BinaryTree::update(BinaryTree* root)
 	}
 	if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
 	{
-		root = deletion(root, 15);
+		root = deleteNode(root, 10);
 	}
 }
 
-void BinaryTree::delBranch(BinaryTree* root, BinaryTree* branch)
+
+BinaryTree* BinaryTree::deleteNode(BinaryTree* root, int key)
 {
-	queue<class BinaryTree*> q;
-	q.push(root);
-
-	BinaryTree* temp;
-	while (!q.empty())
-	{
-		temp = q.front();
-		q.pop();
-
-		if (temp == branch)
-		{
-			temp = NULL;
-			delete (branch);
-			return;
-		}
-		if (temp->right)
-		{
-			if (temp->right == branch)
-			{
-				temp->right = NULL;
-				delete (branch);
-				return;
-			}
-			else
-			{
-				q.push(temp->right);
-			}
-		}
-		if (temp->left)
-		{
-			if (temp->left == branch)
-			{
-				temp->left = NULL;
-				delete (branch);
-				return;
-			}
-			else
-			{
-				q.push(temp->left);
-			}
-		}
-
-	}
-}
-
-BinaryTree* BinaryTree::deletion(BinaryTree* root, int key)
-{
+	// base case
 	if (root == NULL)
-	{
-		return NULL;
-	}
+		return root;
 
-	if (root->left == NULL && root->right == NULL)
-	{
-		if (root->key == key)
-		{
+	// If the key to be deleted is
+	// smaller than the root's
+	// key, then it lies in left subtree
+	if (key < root->key)
+		root->left = deleteNode(root->left, key);
+
+	// If the key to be deleted is
+	// greater than the root's
+	// key, then it lies in right subtree
+	else if (key > root->key)
+		root->right = deleteNode(root->right, key);
+
+	// if key is same as root's key, then This is the node
+	// to be deleted
+	else {
+		// node has no child
+		if (root->left == NULL and root->right == NULL)
 			return NULL;
-		}
-		else
-		{
-			return root;
-		}
-	}
 
-	queue<class BinaryTree*> q;
-	q.push(root);
-
-	BinaryTree* temp = new BinaryTree();
-	BinaryTree* key_node = NULL;
-
-	while (!q.empty())
-	{
-		temp = q.front();
-		q.pop();
-
-		if (temp->key == key)
-		{
-			key_node = temp;
+		// node with only one child or no child
+		else if (root->left == NULL) {
+			BinaryTree* temp = root->right;
+			free(root);
+			return temp;
 		}
-		if (temp->left)
-		{
-			q.push(temp->left);
+		else if (root->right == NULL) {
+			BinaryTree* temp = root->left;
+			free(root);
+			return temp;
 		}
-		if (temp->right)
-		{
-			q.push(temp->right);
-		}
-	}
-	if (key_node != NULL)
-	{
-		int x = temp->key;
-		delBranch(root, temp);
-		key_node->key = x;
+
+		// node with two children: Get the inorder successor
+		// (smallest in the right subtree)
+		BinaryTree* temp = minValueNode(root->right);
+
+		// Copy the inorder successor's content to this node
+		root->key = temp->key;
+
+		// Delete the inorder successor
+		root->right = deleteNode(root->right, temp->key);
 	}
 	return root;
+}
+
+BinaryTree* BinaryTree::minValueNode(BinaryTree* node)
+{
+	BinaryTree* current = node;
+
+	/* loop down to find the leftmost leaf */
+	while (current && current->left != NULL)
+		current = current->left;
+
+	return current;
 }
 
 void BinaryTree::Draw(BinaryTree* root)

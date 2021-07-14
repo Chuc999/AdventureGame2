@@ -35,8 +35,11 @@ protected:
 	void addTreeRight(BinaryTree* right, int input);
 	void addTreeLeft(BinaryTree* left, int input);
 
-	void delBranch(BinaryTree* root, BinaryTree* branch);
-	BinaryTree* deletion(BinaryTree* root, int key);
+
+
+
+	BinaryTree* deleteNode(BinaryTree* root, int input);
+	BinaryTree* minValueNode(BinaryTree* node);
 
 	float screenWidth = 800.0f;
 	float screenHeight = 600.0f;
