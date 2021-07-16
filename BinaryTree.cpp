@@ -5,20 +5,12 @@
 void BinaryTree::init()
 {
 	screenWidth = 1000.0f;
-	screenHeight = 600.0f;
+	screenHeight = 650.0f;
 
 	SetWindowSize((int)screenWidth, (int)screenHeight);
 	
-	BinaryTree* root = newBranch(39);
-	addBranch(root, 10);
-	addBranch(root, 45);
-	addBranch(root, 5);
-	addBranch(root, 40);
-	addBranch(root, 8);
-	addBranch(root, 15);
-	addBranch(root, 14);
-	addBranch(root, 21);
-
+	BinaryTree* root = newBranch(25);
+	branches[0] = root->key;
 	BeginDrawing();
 	ClearBackground(BLANK);
 	EndDrawing();
@@ -26,7 +18,10 @@ void BinaryTree::init()
 	while (binaryGame)
 	{
 		BinaryTree::update(root);
-		BinaryTree::Draw(root);
+		BeginDrawing();
+		BinaryTree::DrawTest(root);
+		BinaryTree::Draw();
+		EndDrawing();
 	}
 }
 
@@ -122,9 +117,77 @@ void BinaryTree::update(BinaryTree* root)
 			SetWindowSize((int)Menu::screenWidth, (int)Menu::screenHeight);
 		}
 	}
-	if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+
+	if (CheckCollisionPointRec(mousePoint, delRecs->delTwo))
 	{
-		root = deleteNode(root, 10);
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			deleteNode(root, branches[1]);
+			branches[1] = 0;
+			for (int i = 0; i < 10; i++)
+			{
+				if (branches[i] == 0)
+				{
+					branches[i] = branches[i + 1];
+					branches[i + 1] = 0;
+				}
+			}
+		}
+	}
+
+	if (CheckCollisionPointRec(mousePoint, treeRecs->inputBox))
+	{
+		if (branches[9] == NULL)
+		{
+			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+			{
+				int i = GetRandomValue(1, 50);
+				
+				for (int j = 0; j < 10; j++)
+				{
+					if (branches[j] == i)
+					{
+						break;
+					}
+					if (branches[j] == 0)
+					{
+						branches[j] = i;
+						addBranch(root, i);
+						break;
+					}					
+				}				
+			}
+		}
+		else
+		{
+			DrawFull();
+		}
+	}	
+}
+
+void BinaryTree::searchTree(BinaryTree* root, int input)
+{
+	BinaryTree* temp = root;
+	BinaryTree* temp2 = new BinaryTree();
+	if (temp == NULL)
+	{
+		cout << " Number not found" << endl << endl;
+		return;
+	}
+	if (temp->key == input)
+	{
+		cout << "Found";
+		
+	}
+	else if (input > temp->key)
+	{
+		temp2 = temp->right;
+		searchTree(temp2, input);
+	}
+	else
+	{
+		temp2 = temp->left;
+		searchTree(temp2, input);
 	}
 }
 
@@ -176,6 +239,7 @@ BinaryTree* BinaryTree::deleteNode(BinaryTree* root, int key)
 		// Delete the inorder successor
 		root->right = deleteNode(root->right, temp->key);
 	}
+
 	return root;
 }
 
@@ -190,77 +254,76 @@ BinaryTree* BinaryTree::minValueNode(BinaryTree* node)
 	return current;
 }
 
-void BinaryTree::Draw(BinaryTree* root)
+void BinaryTree::Draw()
 {
-	BeginDrawing();
-	ClearBackground(BLACK);
-	
-	//DrawLine(int startPosX, int startPosY, int endPosX, int endPosY, Color color); 
-	
-	
 
-	//
-	//
+	DrawText("Can only delete second one in list on the right but the drawing isnt working for me", 10, 600, 20, RED);
 
-	//DrawLine(700, 100, 800, 200, RED); // line from right to right->left
-	//DrawLine(700, 100, 600, 200, RED); // line from right to right->right
-
-	//DrawLine(800, 200, 735, 300, RED); // line from right->left to right->left->left
-	//DrawLine(800, 200, 875, 300, RED); // line from right->left to right->left->right
-
-	//DrawLine(600, 200, 525, 300, RED); // line from right->right to right->right->left
-	//DrawLine(600, 200, 665, 300, RED); // line from right->right to right->right->right
+	DrawRectangleRec(treeRecs->inputBox, LIGHTGRAY);
+	DrawText("Click to add number", 10, 10, 20, RED);
+	DrawRectangleRec(treeRecs->deleteBox, LIGHTGRAY);
 
 
-	//
-
-	//
-	//DrawCircle(600, 200, 25, WHITE); // right->left
-	//DrawCircle(800, 200, 25, WHITE); // right->right
-	////DrawRectangleRec(treeRecs->rightBranch, RED);
-
-	//
-	//
-	//
-	////DrawRectangleRec(treeRecs->leftBranch, RED);
-
-	//DrawCircle(525, 300, 25, WHITE); // right->left->left
-	//DrawCircle(665, 300, 25, WHITE); // right->left->right
-
-	//DrawCircle(735, 300, 25, WHITE); // right->right->left
-	//DrawCircle(875, 300, 25, WHITE); // right->right->right
-	//
-	if (root->key != 0)
+	for (int i = 0; i < 10; i++)
 	{
-		DrawCircle(500, 50, 25, WHITE); // Key
-		DrawText(TextFormat("%i", root->key), 485, 35, 30, RED);
+		DrawRectangle(900, 20 + (i * 65), 40, 40, WHITE);
+		DrawText((TextFormat("%i", branches[i])), 903, 20 + (i * 65), 30, RED);
 	}
-	if (root->left != nullptr)
-	{
-		DrawLine(475, 50, 300, 100, RED); // line from Key to left
-		DrawCircle(300, 100, 25, WHITE); // left
-		DrawText(TextFormat("%i", root->left->key), 285, 85, 30, RED);
-	}
-	if (root->right != nullptr)
-	{
-		DrawLine(525, 50, 700, 100, RED); // line from Key to Right
-		DrawCircle(700, 100, 25, WHITE); // right	
-		DrawText(TextFormat("%i", root->right->key), 685, 85, 30, RED);
-	}
-	if (root->left->left != nullptr)
-	{
-		DrawLine(275, 115, 200, 200, RED); // line from left to left->left
-		DrawCircle(200, 200, 25, WHITE); // left->left
-		DrawText(TextFormat("%i", root->left->left->key), 185, 185, 30, RED);
-	}
-	if (root->left->right != nullptr)
-	{
-		DrawLine(325, 115, 400, 200, RED); // line from left to left->Right
-		DrawCircle(400, 200, 25, WHITE); // left->Right
-		DrawText(TextFormat("%i", root->left->right->key), 385, 185, 30, RED);
-	}
-
 	DrawRectangleRec(treeRecs->quitBox, BLANK);
-	DrawText("QUIT", 900, 550, 20, RED);
-	EndDrawing();
+	DrawText("QUIT", 800, 550, 20, RED);
+}
+
+void BinaryTree::DrawTest(BinaryTree* root)
+{	
+	Draw2(root, 500, 50, 400, root);
+}
+
+void BinaryTree::Draw2(BinaryTree* root, int x, int y, int hozSpacing, BinaryTree* selected)
+{
+	hozSpacing /= 2;
+
+	if (root)
+	{
+		if (root->HasLeft())
+		{
+			DrawLine(x, y, x - hozSpacing, y + 80, RED);
+
+			Draw2(root->GetLeft(), x - hozSpacing, y + 80, hozSpacing, selected);
+		}
+
+		if (root->HasRight())
+		{
+			DrawLine(x, y, x + hozSpacing, y + 80, RED);
+
+			Draw2(root->GetRight(), x + hozSpacing, y + 80, hozSpacing, selected);
+		}
+
+		root->Draw3(x, y, (selected == root));
+	}
+}
+
+void BinaryTree::Draw3(int x, int y, bool selected)
+{
+	static char buffer[10];
+
+	sprintf_s(buffer, "%d", key);
+
+	DrawCircle(x, y, 28, YELLOW);
+
+	if (selected == true)
+	{
+		DrawCircle(x, y, 28, GREEN);
+	}
+	else
+	{
+		DrawCircle(x, y, 28, GREEN);
+	}
+
+	DrawText(buffer, x - 12, y - 10, 25, WHITE);
+
+}
+
+void BinaryTree::DrawFull()
+{
+	DrawText("Tree Full", 50, 90, 20, RED);
 }
