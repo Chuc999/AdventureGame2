@@ -156,6 +156,176 @@ void BinaryTree::update(BinaryTree* root)
 		}
 	}
 
+	if (CheckCollisionPointRec(mousePoint, delRecs->delThree))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			BinaryTree* temp = root;
+			root = deleteNode(temp, branches[2]);
+			ClearBackground(BLANK);
+			DrawTest(root);
+			branches[2] = 0;
+			for (int i = 0; i < 10; i++)
+			{
+				if (branches[i] == 0)
+				{
+					branches[i] = branches[i + 1];
+					branches[i + 1] = 0;
+					branches[9] = 0;
+				}
+			}
+		}
+	}
+
+	if (CheckCollisionPointRec(mousePoint, delRecs->delFour))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			BinaryTree* temp = root;
+			root = deleteNode(temp, branches[3]);
+			ClearBackground(BLANK);
+			DrawTest(root);
+			branches[3] = 0;
+			for (int i = 0; i < 10; i++)
+			{
+				if (branches[i] == 0)
+				{
+					branches[i] = branches[i + 1];
+					branches[i + 1] = 0;
+					branches[9] = 0;
+				}
+			}
+		}
+	}
+
+	if (CheckCollisionPointRec(mousePoint, delRecs->delFive))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			BinaryTree* temp = root;
+			root = deleteNode(temp, branches[4]);
+			ClearBackground(BLANK);
+			DrawTest(root);
+			branches[4] = 0;
+			for (int i = 0; i < 10; i++)
+			{
+				if (branches[i] == 0)
+				{
+					branches[i] = branches[i + 1];
+					branches[i + 1] = 0;
+					branches[9] = 0;
+				}
+			}
+		}
+	}
+
+	if (CheckCollisionPointRec(mousePoint, delRecs->delSix))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			BinaryTree* temp = root;
+			root = deleteNode(temp, branches[5]);
+			ClearBackground(BLANK);
+			DrawTest(root);
+			branches[5] = 0;
+			for (int i = 0; i < 10; i++)
+			{
+				if (branches[i] == 0)
+				{
+					branches[i] = branches[i + 1];
+					branches[i + 1] = 0;
+					branches[9] = 0;
+				}
+			}
+		}
+	}
+
+	if (CheckCollisionPointRec(mousePoint, delRecs->delSeven))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			BinaryTree* temp = root;
+			root = deleteNode(temp, branches[6]);
+			ClearBackground(BLANK);
+			DrawTest(root);
+			branches[6] = 0;
+			for (int i = 0; i < 10; i++)
+			{
+				if (branches[i] == 0)
+				{
+					branches[i] = branches[i + 1];
+					branches[i + 1] = 0;
+					branches[9] = 0;
+				}
+			}
+		}
+	}
+
+	if (CheckCollisionPointRec(mousePoint, delRecs->delEight))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			BinaryTree* temp = root;
+			root = deleteNode(temp, branches[7]);
+			ClearBackground(BLANK);
+			DrawTest(root);
+			branches[7] = 0;
+			for (int i = 0; i < 10; i++)
+			{
+				if (branches[i] == 0)
+				{
+					branches[i] = branches[i + 1];
+					branches[i + 1] = 0;
+					branches[9] = 0;
+				}
+			}
+		}
+	}
+
+	if (CheckCollisionPointRec(mousePoint, delRecs->delNine))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			BinaryTree* temp = root;
+			root = deleteNode(temp, branches[8]);
+			ClearBackground(BLANK);
+			DrawTest(root);
+			branches[8] = 0;
+			for (int i = 0; i < 10; i++)
+			{
+				if (branches[i] == 0)
+				{
+					branches[i] = branches[i + 1];
+					branches[i + 1] = 0;
+					branches[9] = 0;
+				}
+			}
+		}
+	}
+
+	if (CheckCollisionPointRec(mousePoint, delRecs->delTen))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			BinaryTree* temp = root;
+			root = deleteNode(temp, branches[9]);
+			ClearBackground(BLANK);
+			DrawTest(root);
+			branches[9] = 0;
+			for (int i = 0; i < 10; i++)
+			{
+				if (branches[i] == 0)
+				{
+					branches[i] = branches[i + 1];
+					branches[i + 1] = 0;
+					branches[9] = 0;
+				}
+			}
+		}
+	}
+
+
+
 	if (CheckCollisionPointRec(mousePoint, treeRecs->inputBox))
 	{
 		if (branches[9] == NULL)
