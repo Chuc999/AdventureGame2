@@ -7,6 +7,7 @@ void BinaryTree::init()
 	screenWidth = 1000.0f;
 	screenHeight = 650.0f;
 
+
 	SetWindowSize((int)screenWidth, (int)screenHeight);
 	
 	BinaryTree* root = new BinaryTree();
@@ -153,6 +154,10 @@ void BinaryTree::update(BinaryTree* root)
 					branches[9] = 0;
 				}
 			}
+		}
+		if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+		{
+			items[0] = searchTree(root, branches[1]);
 		}
 	}
 
@@ -324,8 +329,6 @@ void BinaryTree::update(BinaryTree* root)
 		}
 	}
 
-
-
 	if (CheckCollisionPointRec(mousePoint, treeRecs->inputBox))
 	{
 		if (branches[9] == NULL)
@@ -364,20 +367,19 @@ void BinaryTree::update(BinaryTree* root)
 	}	
 }
 
-BinaryTree* BinaryTree::searchTree(BinaryTree* root, int input)
+int BinaryTree::searchTree(BinaryTree* root, int input)
 {
 	BinaryTree* temp = root;
 	BinaryTree* temp2 = new BinaryTree();
 	if (temp == NULL)
 	{
 		cout << " Number not found" << endl << endl;
-		return NULL;
+		return 0;
 	}
 	if (temp->key == input)
-	{
-		root = deleteNode(root, key);
-		return root;
-		
+	{		
+		cout << "FOUND" << endl;
+		return input;
 	}
 	else if (input > temp->key)
 	{
@@ -390,7 +392,6 @@ BinaryTree* BinaryTree::searchTree(BinaryTree* root, int input)
 		searchTree(temp2, input);
 	}
 }
-
 
 BinaryTree* BinaryTree::deleteNode(BinaryTree* test, int key)
 {
@@ -508,6 +509,11 @@ void BinaryTree::Draw3(int x, int y)
 	DrawCircle(x, y, 28, YELLOW);
 
 	DrawCircle(x, y, 28, GREEN);
+
+	if (key == items[0])
+	{
+		DrawCircle(x, y, 28, RED);
+	}
 
 	DrawText(buffer, x - 12, y - 10, 25, WHITE);
 

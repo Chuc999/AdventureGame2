@@ -58,8 +58,8 @@ protected:
 	void addTreeRight(BinaryTree* right, int input);
 	void addTreeLeft(BinaryTree* left, int input);
 
-	int branches[10];
-	
+	int branches[10]{};
+	int items[3]{};
 
 	BinaryTree* deleteNode(BinaryTree* root, int input);
 	BinaryTree* minValueNode(BinaryTree* node);
@@ -73,12 +73,14 @@ protected:
 	void update(BinaryTree* root);
 	void Draw();
 	void DrawTest(BinaryTree* root);
-	BinaryTree* searchTree(BinaryTree* root, int input);
+	int searchTree(BinaryTree* root, int input);
 	void Draw2(BinaryTree* pNode, int x, int y, int hozSpacing);
 	void Draw3(int x, int y);
 	void DrawFull();
+	
 public:
 	bool binaryGame = true;
+
 	void init();
 
 	bool HasLeft()
