@@ -8,8 +8,10 @@ using namespace std;
 
 class BinaryTree : protected Menu
 {
-
+private:
+	
 protected:
+	
 	struct recs
 	{
 		Rectangle quitBox	{ 800, 550, 50, 20 };
@@ -26,11 +28,20 @@ protected:
 
 	struct deleteBoxes
 	{
-		Rectangle delOne{ 900, 20, 40, 40 };
-		Rectangle delTwo{ 900, 85, 40, 40 };
-
+		Rectangle delOne	{ 900, 20, 40, 40 };
+		Rectangle delTwo	{ 900, 85, 40, 40 };
+		Rectangle delThree	{ 900, 150, 40, 40 };
+		Rectangle delFour	{ 900, 215, 40, 40 };
+		Rectangle delFive	{ 900, 280, 40, 40 };
+		Rectangle delSix	{ 900, 345, 40, 40 };
+		Rectangle delSeven	{ 900, 410, 40, 40 };
+		Rectangle delEight	{ 900, 475, 40, 40 };
+		Rectangle delNine	{ 900, 540, 40, 40 };
+		Rectangle delTen	{ 900, 605, 40, 40 };
 	};
-		
+
+	
+
 	int key = 0;
 	BinaryTree* left = NULL;
 	BinaryTree* right = NULL;
@@ -62,9 +73,9 @@ protected:
 	void update(BinaryTree* root);
 	void Draw();
 	void DrawTest(BinaryTree* root);
-	void searchTree(BinaryTree* root, int input);
-	void Draw2(BinaryTree* pNode, int x, int y, int hozSpacing, BinaryTree* selected);
-	void Draw3(int x, int y, bool selected);
+	BinaryTree* searchTree(BinaryTree* root, int input);
+	void Draw2(BinaryTree* pNode, int x, int y, int hozSpacing);
+	void Draw3(int x, int y);
 	void DrawFull();
 public:
 	bool binaryGame = true;

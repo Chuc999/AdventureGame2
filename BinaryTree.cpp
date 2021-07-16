@@ -9,8 +9,8 @@ void BinaryTree::init()
 
 	SetWindowSize((int)screenWidth, (int)screenHeight);
 	
-	BinaryTree* root = newBranch(25);
-	branches[0] = root->key;
+	BinaryTree* root = new BinaryTree();
+
 	BeginDrawing();
 	ClearBackground(BLANK);
 	EndDrawing();
@@ -31,10 +31,7 @@ void BinaryTree::addBranch(BinaryTree* root, int input)
 	BinaryTree* temp2 = new BinaryTree();
 	BinaryTree* temp3 = new BinaryTree();
 
-	if (temp->key == NULL)
-	{
-		temp = newBranch(input);
-	}
+	
 	if (input > temp->key)
 	{
 		if (temp->right != nullptr)
@@ -118,11 +115,34 @@ void BinaryTree::update(BinaryTree* root)
 		}
 	}
 
-	if (CheckCollisionPointRec(mousePoint, delRecs->delTwo))
+	if (CheckCollisionPointRec(mousePoint, delRecs->delOne))
 	{
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{
-			deleteNode(root, branches[1]);
+			BinaryTree* temp = root;
+			root = deleteNode(temp, branches[0]);
+			ClearBackground(BLANK);
+			DrawTest(root);
+			branches[0] = 0;
+			for (int i = 0; i < 10; i++)
+			{
+				if (branches[i] == 0)
+				{
+					branches[i] = branches[i + 1];
+					branches[i + 1] = 0;
+					branches[9] = 0;
+				}
+			}
+		}
+	}
+
+	if (CheckCollisionPointRec(mousePoint, delRecs->delTwo))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{			
+			root = deleteNode(root, branches[1]);
+			ClearBackground(BLANK);
+			DrawTest(root);
 			branches[1] = 0;
 			for (int i = 0; i < 10; i++)
 			{
@@ -130,6 +150,7 @@ void BinaryTree::update(BinaryTree* root)
 				{
 					branches[i] = branches[i + 1];
 					branches[i + 1] = 0;
+					branches[9] = 0;
 				}
 			}
 		}
@@ -152,8 +173,16 @@ void BinaryTree::update(BinaryTree* root)
 					if (branches[j] == 0)
 					{
 						branches[j] = i;
-						addBranch(root, i);
-						break;
+						if (root->key == NULL)
+						{
+							root->key = i;
+							break;
+						}
+						else
+						{
+							addBranch(root, i);
+							break;
+						}
 					}					
 				}				
 			}
@@ -165,18 +194,19 @@ void BinaryTree::update(BinaryTree* root)
 	}	
 }
 
-void BinaryTree::searchTree(BinaryTree* root, int input)
+BinaryTree* BinaryTree::searchTree(BinaryTree* root, int input)
 {
 	BinaryTree* temp = root;
 	BinaryTree* temp2 = new BinaryTree();
 	if (temp == NULL)
 	{
 		cout << " Number not found" << endl << endl;
-		return;
+		return NULL;
 	}
 	if (temp->key == input)
 	{
-		cout << "Found";
+		root = deleteNode(root, key);
+		return root;
 		
 	}
 	else if (input > temp->key)
@@ -192,55 +222,56 @@ void BinaryTree::searchTree(BinaryTree* root, int input)
 }
 
 
-BinaryTree* BinaryTree::deleteNode(BinaryTree* root, int key)
+BinaryTree* BinaryTree::deleteNode(BinaryTree* test, int key)
 {
 	// base case
-	if (root == NULL)
-		return root;
+	if (test == NULL)
+		return test;
 
 	// If the key to be deleted is
 	// smaller than the root's
 	// key, then it lies in left subtree
-	if (key < root->key)
-		root->left = deleteNode(root->left, key);
+	if (key < test->key)
+		test->left = deleteNode(test->left, key);
 
 	// If the key to be deleted is
 	// greater than the root's
 	// key, then it lies in right subtree
-	else if (key > root->key)
-		root->right = deleteNode(root->right, key);
+	else if (key > test->key)
+		test->right = deleteNode(test->right, key);
 
 	// if key is same as root's key, then This is the node
 	// to be deleted
-	else {
+	else 
+	{
 		// node has no child
-		if (root->left == NULL and root->right == NULL)
+		if (test->left == NULL and test->right == NULL)
 			return NULL;
 
 		// node with only one child or no child
-		else if (root->left == NULL) {
-			BinaryTree* temp = root->right;
-			free(root);
+		else if (test->left == NULL) {
+			BinaryTree* temp = test->right;
+			free(test);
 			return temp;
 		}
-		else if (root->right == NULL) {
-			BinaryTree* temp = root->left;
-			free(root);
+		else if (test->right == NULL) {
+			BinaryTree* temp = test->left;
+			free(test);
 			return temp;
 		}
 
 		// node with two children: Get the inorder successor
 		// (smallest in the right subtree)
-		BinaryTree* temp = minValueNode(root->right);
+		BinaryTree* temp = minValueNode(test->right);
 
 		// Copy the inorder successor's content to this node
-		root->key = temp->key;
+		test->key = temp->key;
 
 		// Delete the inorder successor
-		root->right = deleteNode(root->right, temp->key);
+		test->right = deleteNode(test->right, temp->key);
 	}
 
-	return root;
+	return test;
 }
 
 BinaryTree* BinaryTree::minValueNode(BinaryTree* node)
@@ -256,13 +287,8 @@ BinaryTree* BinaryTree::minValueNode(BinaryTree* node)
 
 void BinaryTree::Draw()
 {
-
-	DrawText("Can only delete second one in list on the right but the drawing isnt working for me", 10, 600, 20, RED);
-
 	DrawRectangleRec(treeRecs->inputBox, LIGHTGRAY);
 	DrawText("Click to add number", 10, 10, 20, RED);
-	DrawRectangleRec(treeRecs->deleteBox, LIGHTGRAY);
-
 
 	for (int i = 0; i < 10; i++)
 	{
@@ -275,10 +301,11 @@ void BinaryTree::Draw()
 
 void BinaryTree::DrawTest(BinaryTree* root)
 {	
-	Draw2(root, 500, 50, 400, root);
+	ClearBackground(BLANK);
+	Draw2(root, 500, 50, 400);
 }
 
-void BinaryTree::Draw2(BinaryTree* root, int x, int y, int hozSpacing, BinaryTree* selected)
+void BinaryTree::Draw2(BinaryTree* root, int x, int y, int hozSpacing)
 {
 	hozSpacing /= 2;
 
@@ -288,21 +315,21 @@ void BinaryTree::Draw2(BinaryTree* root, int x, int y, int hozSpacing, BinaryTre
 		{
 			DrawLine(x, y, x - hozSpacing, y + 80, RED);
 
-			Draw2(root->GetLeft(), x - hozSpacing, y + 80, hozSpacing, selected);
+			Draw2(root->GetLeft(), x - hozSpacing, y + 80, hozSpacing);
 		}
 
 		if (root->HasRight())
 		{
 			DrawLine(x, y, x + hozSpacing, y + 80, RED);
 
-			Draw2(root->GetRight(), x + hozSpacing, y + 80, hozSpacing, selected);
+			Draw2(root->GetRight(), x + hozSpacing, y + 80, hozSpacing);
 		}
 
-		root->Draw3(x, y, (selected == root));
+		root->Draw3(x, y);
 	}
 }
 
-void BinaryTree::Draw3(int x, int y, bool selected)
+void BinaryTree::Draw3(int x, int y)
 {
 	static char buffer[10];
 
@@ -310,14 +337,7 @@ void BinaryTree::Draw3(int x, int y, bool selected)
 
 	DrawCircle(x, y, 28, YELLOW);
 
-	if (selected == true)
-	{
-		DrawCircle(x, y, 28, GREEN);
-	}
-	else
-	{
-		DrawCircle(x, y, 28, GREEN);
-	}
+	DrawCircle(x, y, 28, GREEN);
 
 	DrawText(buffer, x - 12, y - 10, 25, WHITE);
 
