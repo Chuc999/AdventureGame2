@@ -461,6 +461,9 @@ void BinaryTree::Draw()
 	DrawRectangleRec(treeRecs->inputBox, LIGHTGRAY);
 	DrawText("Click to add number", 10, 10, 20, RED);
 
+	DrawText("Left Click on numbers on right to delete", 250, 550, 20, RED);
+	DrawText("Right Click on numbers on right to Search", 250, 600, 20, RED);
+
 	for (int i = 0; i < 10; i++)
 	{
 		DrawRectangle(900, 20 + (i * 65), 40, 40, WHITE);
@@ -516,8 +519,9 @@ void BinaryTree::Draw3(int x, int y)
 	}
 
 	DrawText(buffer, x - 12, y - 10, 25, WHITE);
-
 }
+
+
 
 void BinaryTree::DrawFull()
 {

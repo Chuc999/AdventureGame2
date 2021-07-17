@@ -59,7 +59,7 @@ protected:
 	void addTreeLeft(BinaryTree* left, int input);
 
 	int branches[10]{};
-	int items[3]{};
+	int items[3] = { 0 };
 
 	BinaryTree* deleteNode(BinaryTree* root, int input);
 	BinaryTree* minValueNode(BinaryTree* node);
