@@ -397,35 +397,49 @@ BinaryTree* BinaryTree::deleteNode(BinaryTree* test, int key)
 {
 	// base case
 	if (test == NULL)
+	{
 		return test;
+	}
+
 
 	// If the key to be deleted is
 	// smaller than the root's
 	// key, then it lies in left subtree
 	if (key < test->key)
+	{
 		test->left = deleteNode(test->left, key);
+	}
+
 
 	// If the key to be deleted is
 	// greater than the root's
 	// key, then it lies in right subtree
 	else if (key > test->key)
+	{
 		test->right = deleteNode(test->right, key);
+	}
+
 
 	// if key is same as root's key, then This is the node
 	// to be deleted
 	else 
 	{
 		// node has no child
-		if (test->left == NULL and test->right == NULL)
+		if ((test->left == NULL) && (test->right == NULL))
+		{
 			return NULL;
+		}
+
 
 		// node with only one child or no child
-		else if (test->left == NULL) {
+		else if (test->left == NULL) 
+		{
 			BinaryTree* temp = test->right;
 			free(test);
 			return temp;
 		}
-		else if (test->right == NULL) {
+		else if (test->right == NULL) 
+		{
 			BinaryTree* temp = test->left;
 			free(test);
 			return temp;

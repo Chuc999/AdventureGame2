@@ -8,7 +8,7 @@ protected:
 	{
 		const char* two = "Linked List";
 		const char* three = "Binary Tree";
-		const char* four = "Hashing";
+		const char* four = "Hashing - Console Game";
 		const char* five = "Adventure Game";
 		const char* six = "Back";
 	};
@@ -26,9 +26,10 @@ protected:
 	rectangles* recs = new rectangles();
 	menuOptions* menu = new menuOptions();
 
-	bool newGame = true;
+
 
 public:
+	bool newGame = true;
 	void gameMenu();
 	void update();
 	void draw();

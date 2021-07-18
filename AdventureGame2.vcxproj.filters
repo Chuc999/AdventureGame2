@@ -33,7 +33,7 @@
     <ClCompile Include="BinaryTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Hashing.cpp">
+    <ClCompile Include="Hash.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,7 +53,7 @@
     <ClInclude Include="BinaryTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Hashing.h">
+    <ClInclude Include="Hash.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

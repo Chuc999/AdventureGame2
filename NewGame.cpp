@@ -1,6 +1,7 @@
 #include "NewGame.h"
 #include "Node.h"
 #include "BinaryTree.h"
+#include "Hash.h"
 
 void NewGame::gameMenu()
 {
@@ -52,8 +53,13 @@ void NewGame::update()
 	{
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{
-			DrawText("HIT", (int)screenWidth / 2, 0, 40, BLACK);
-			DrawRectangleRec(recs->textBox4, RED);
+			
+			BeginDrawing();
+			ClearBackground(BLANK);
+			EndDrawing();
+			newGame = false;
+			Hash* hash = new Hash();
+			hash->main2();
 		}
 	}
 	if (CheckCollisionPointRec(mousePoint, recs->textBox5))
